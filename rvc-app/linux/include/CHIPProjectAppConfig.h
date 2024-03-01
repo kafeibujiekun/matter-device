@@ -32,3 +32,7 @@
 
 #define CHIP_DEVICE_CONFIG_DEVICE_TYPE 116 // 0x0074 = 116 = Matter Robotic Vacuum Cleaner
 #define CHIP_DEVICE_CONFIG_DEVICE_NAME "Test RVC"
+#define FATCONFDIR "./data"
+#define SYSCONFDIR "./data"
+#define LOCALSTATEDIR "./data"
+#define CHIP_CONFIG_KVS_PATH "./data/chip_kvs"
