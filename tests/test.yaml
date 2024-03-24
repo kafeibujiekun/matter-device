@@ -1,0 +1,60 @@
+name: 78.1.1. [TC-RVCCLEANM-1.1] Global attributes with DUT as Server
+
+PICS:
+    - RVCCLEANM.S
+
+config:
+    nodeId: 0x12344321
+    cluster: "RVC Run Mode"
+    endpoint: 1
+
+tests:
+    - label:
+          "Step 1: Commission DUT to TH (can be skipped if done in a preceding
+          test)."
+      cluster: "DelayCommands"
+      command: "WaitForCommissionee"
+      arguments:
+          values:
+              - name: "nodeId"
+                value: nodeId
+
+    - label: "Do a simple user prompt message. Expect 'y' to pass."
+      cluster: "LogCommands"
+      command: "UserPrompt"
+      arguments:
+          values:
+              - name: "message"
+                value: "Please enter 'y' for success"
+              - name: "expectedValue"
+                value: "y"
+
+    - label: "Wait for 5S"
+      cluster: "DelayCommands"
+      command: "WaitForMs"
+      arguments:
+          values:
+              - name: "ms"
+                value: 5000
+
+    - label: "Step 2: TH reads from the DUT the ClusterRevision attribute."
+      command: "readAttribute"
+      attribute: "ClusterRevision"
+      response:
+          value: 2
+          constraints:
+              type: int16u
+
+    - label: "Step 3: TH reads from the DUT the FeatureMap attribute."
+      command: "readAttribute"
+      attribute: "FeatureMap"
+      response:
+          value: 0
+          constraints:
+              type: bitmap32
+
+    - label: "Step 4:TH reads the ClusterRevision from DUT"
+      command: "readAttribute"
+      attribute: "VendorName"
+      response:
+          value: "TEST_VENDOR"

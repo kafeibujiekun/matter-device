@@ -19,6 +19,8 @@
 #include "rvc-device.h"
 #include <AppMain.h>
 
+#include <app-common/zap-generated/attributes/Accessors.h>
+
 #define RVC_ENDPOINT 1
 
 using namespace chip;
@@ -47,6 +49,13 @@ void ApplicationInit()
     gRvcDevice->Init();
 
     sRvcAppCommandDelegate.SetRvcDevice(gRvcDevice);
+
+    // chip::CharSpan value{"XXXXXXX", 8};
+
+    if (chip::app::Clusters::BasicInformation::Attributes::NodeLabel::Set(0, chip::CharSpan::fromCharString("XXXXXXXX")) != Protocols::InteractionModel::Status::Success)
+    {
+        printf("########## NodeLabel Set failure");
+    }
 }
 
 void ApplicationShutdown()
